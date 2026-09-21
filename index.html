@@ -60,7 +60,7 @@
         .day-page { display: none; }
         .day-page.active { display: block; }
 
-        /* 三个板块的通用卡片 */
+        /* 模块卡片样式 */
         .section-card {
             background: white; border-radius: 12px; padding: 18px; margin-bottom: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
@@ -70,6 +70,27 @@
             border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; display: flex; align-items: center; gap: 6px;
         }
 
+        /* 航班信息卡片专属样式 */
+        .flight-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #bae6fd; border-radius: 10px; padding: 15px; margin-bottom: 12px;
+        }
+        .flight-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .flight-number { font-size: 1.1rem; font-weight: bold; color: #0369a1; }
+        .flight-time { font-size: 0.9rem; color: #334155; font-weight: 500; }
+        .flight-route { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; text-align: center; }
+        .flight-node { flex: 1; }
+        .airport-code { font-size: 1.2rem; font-weight: bold; color: #0f172a; }
+        .airport-detail { font-size: 0.8rem; color: #64748b; }
+        .flight-arrow { color: var(--primary); font-size: 1.2rem; font-weight: bold; padding: 0 10px; }
+        .flight-actions { display: flex; gap: 10px; margin-top: 12px; }
+        .flight-btn {
+            flex: 1; text-align: center; background: white; color: #0284c7; border: 1px solid #7dd3fc;
+            text-decoration: none; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; transition: 0.2s;
+        }
+        .flight-btn:hover { background: #0284c7; color: white; }
+
+        /* 打卡列表项 */
         .itinerary-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; transition: 0.3s; }
         .itinerary-item:last-child { border-bottom: none; }
         
@@ -115,13 +136,42 @@
 
         <!-- 顶部 Tab 标签切换 -->
         <div class="tabs-nav">
-            <button class="tab-btn active" onclick="switchDay('day1', this)">Day 1 (7/17)</button>
-            <button class="tab-btn" onclick="switchDay('day2', this)">Day 2 (7/18)</button>
-            <button class="tab-btn" onclick="switchDay('day3', this)">Day 3 (7/19)</button>
+            <button class="tab-btn active" onclick="switchDay('day1', this)">Day 1 (11/25)</button>
+            <button class="tab-btn" onclick="switchDay('day2', this)">Day 2 (11/26)</button>
+            <button class="tab-btn" onclick="switchDay('day3', this)">Day 3 (11/27)</button>
+            <button class="tab-btn" onclick="switchDay('day4', this)">Day 4 (11/28)</button>
+            <button class="tab-btn" onclick="switchDay('day5', this)">Day 5 (11/29)</button>
         </div>
 
         <!-- ================= Day 1 页面 ================= -->
         <div id="day1" class="day-page active">
+            <!-- 航班信息 -->
+            <div class="section-card">
+                <h3>✈️ 去程航班与机场</h3>
+                <div class="flight-card">
+                    <div class="flight-header">
+                        <span class="flight-number">国泰航空 CX251</span>
+                        <span class="flight-time">⏱️ 00:15 - 06:20</span>
+                    </div>
+                    <div class="flight-route">
+                        <div class="flight-node">
+                            <div class="airport-code">HKG</div>
+                            <div class="airport-detail">香港国际机场 T1</div>
+                        </div>
+                        <div class="flight-arrow">➔</div>
+                        <div class="flight-node">
+                            <div class="airport-code">LHR</div>
+                            <div class="airport-detail">伦敦希思罗机场 T3</div>
+                        </div>
+                    </div>
+                    <div class="flight-actions">
+                        <!-- 点击自动携带航班号搜索 Google 实时状态 -->
+                        <a href="https://www.google.com/search?q=CX251+flight+status" target="_blank" class="flight-btn">🔍 查询实时航班状态</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="flight-btn">📍 希思罗机场地图</a>
+                    </div>
+                </div>
+            </div>
+
             <!-- 住宿 -->
             <div class="section-card">
                 <h3>🏨 住宿</h3>
@@ -137,11 +187,6 @@
                 <h3>📍 行程景点</h3>
                 <div class="itinerary-item" id="item-task2">
                     <input type="checkbox" id="task2" onchange="updateTask(this)">
-                    <span class="location-name">希思罗机场抵达</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="map-link">📍 Map</a>
-                </div>
-                <div class="itinerary-item" id="item-task3">
-                    <input type="checkbox" id="task3" onchange="updateTask(this)">
                     <span class="location-name">大英博物馆</span>
                     <a href="https://www.google.com/maps/search/?api=1&query=The+British+Museum" target="_blank" class="map-link">📍 Map</a>
                 </div>
@@ -150,8 +195,8 @@
             <!-- 餐厅 -->
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
-                <div class="itinerary-item" id="item-task4">
-                    <input type="checkbox" id="task4" onchange="updateTask(this)">
+                <div class="itinerary-item" id="item-task3">
+                    <input type="checkbox" id="task3" onchange="updateTask(this)">
                     <span class="location-name">晚餐：Flat Iron 牛排馆</span>
                     <a href="https://www.google.com/maps/search/?api=1&query=Flat+Iron+London" target="_blank" class="map-link">📍 Map</a>
                 </div>
@@ -160,36 +205,26 @@
 
         <!-- ================= Day 2 页面 ================= -->
         <div id="day2" class="day-page">
-            <!-- 住宿 -->
             <div class="section-card">
                 <h3>🏨 住宿</h3>
-                <div class="itinerary-item" id="item-task5">
-                    <input type="checkbox" id="task5" onchange="updateTask(this)">
+                <div class="itinerary-item" id="item-task4">
+                    <input type="checkbox" id="task4" onchange="updateTask(this)">
                     <span class="location-name">伦敦中心酒店 (连住)</span>
                     <a href="https://www.google.com/maps/search/?api=1&query=London+Hotel" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
-
-            <!-- 行程 -->
             <div class="section-card">
                 <h3>📍 行程景点</h3>
-                <div class="itinerary-item" id="item-task6">
-                    <input type="checkbox" id="task6" onchange="updateTask(this)">
+                <div class="itinerary-item" id="item-task5">
+                    <input type="checkbox" id="task5" onchange="updateTask(this)">
                     <span class="location-name">伦敦眼摩天轮</span>
                     <a href="https://www.google.com/maps/search/?api=1&query=The+London+Eye" target="_blank" class="map-link">📍 Map</a>
                 </div>
-                <div class="itinerary-item" id="item-task7">
-                    <input type="checkbox" id="task7" onchange="updateTask(this)">
-                    <span class="location-name">大本钟 & 威斯敏斯特教堂</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Big+Ben" target="_blank" class="map-link">📍 Map</a>
-                </div>
             </div>
-
-            <!-- 餐厅 -->
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
-                <div class="itinerary-item" id="item-task8">
-                    <input type="checkbox" id="task8" onchange="updateTask(this)">
+                <div class="itinerary-item" id="item-task6">
+                    <input type="checkbox" id="task6" onchange="updateTask(this)">
                     <span class="location-name">午餐：Borough Market 炸鱼薯条</span>
                     <a href="https://www.google.com/maps/search/?api=1&query=Borough+Market" target="_blank" class="map-link">📍 Map</a>
                 </div>
@@ -198,43 +233,100 @@
 
         <!-- ================= Day 3 页面 ================= -->
         <div id="day3" class="day-page">
-            <!-- 住宿 -->
             <div class="section-card">
                 <h3>🏨 住宿</h3>
-                <div class="itinerary-item" id="item-task9">
-                    <input type="checkbox" id="task9" onchange="updateTask(this)">
+                <div class="itinerary-item" id="item-task7">
+                    <input type="checkbox" id="task7" onchange="updateTask(this)">
                     <span class="location-name">利兹市中心酒店</span>
                     <a href="https://www.google.com/maps/search/?api=1&query=Leeds+City+Centre+Hotel" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
-
-            <!-- 行程 -->
             <div class="section-card">
                 <h3>📍 行程景点</h3>
-                <div class="itinerary-item" id="item-task10">
-                    <input type="checkbox" id="task10" onchange="updateTask(this)">
-                    <span class="location-name">国王十字车站 (搭乘火车的 Platform 9¾)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=King%27s+Cross+Station" target="_blank" class="map-link">📍 Map</a>
-                </div>
-                <div class="itinerary-item" id="item-task11">
-                    <input type="checkbox" id="task11" onchange="updateTask(this)">
+                <div class="itinerary-item" id="item-task8">
+                    <input type="checkbox" id="task8" onchange="updateTask(this)">
                     <span class="location-name">皇家军械博物馆</span>
                     <a href="https://www.google.com/maps/search/?api=1&query=Royal+Armouries+Museum+Leeds" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
-
-            <!-- 餐厅 -->
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
-                <div class="itinerary-item" id="item-task12">
-                    <input type="checkbox" id="task12" onchange="updateTask(this)">
-                    <span class="location-name">晚餐：利兹本地特色 Pub 料理</span>
+                <div class="itinerary-item" id="item-task9">
+                    <input type="checkbox" id="task9" onchange="updateTask(this)">
+                    <span class="location-name">晚餐：利兹本地特色 Pub</span>
                     <a href="https://www.google.com/maps/search/?api=1&query=Leeds+Pub" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
         </div>
 
-        <!-- 留言板（底座固定显示） -->
+        <!-- ================= Day 4 页面 ================= -->
+        <div id="day4" class="day-page">
+            <div class="section-card">
+                <h3>🏨 住宿</h3>
+                <div class="itinerary-item" id="item-task10">
+                    <input type="checkbox" id="task10" onchange="updateTask(this)">
+                    <span class="location-name">利兹市中心酒店 (连住)</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Leeds+City+Centre+Hotel" target="_blank" class="map-link">📍 Map</a>
+                </div>
+            </div>
+            <div class="section-card">
+                <h3>📍 行程景点</h3>
+                <div class="itinerary-item" id="item-task11">
+                    <input type="checkbox" id="task11" onchange="updateTask(this)">
+                    <span class="location-name">柯克斯托尔修道院 (Kirkstall Abbey)</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Kirkstall+Abbey" target="_blank" class="map-link">📍 Map</a>
+                </div>
+            </div>
+            <div class="section-card">
+                <h3>🍽️ 餐厅与美食</h3>
+                <div class="itinerary-item" id="item-task12">
+                    <input type="checkbox" id="task12" onchange="updateTask(this)">
+                    <span class="location-name">午餐：Leeds Corn Exchange 咖啡馆</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Leeds+Corn+Exchange" target="_blank" class="map-link">📍 Map</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= Day 5 页面 ================= -->
+        <div id="day5" class="day-page">
+            <!-- 航班信息 -->
+            <div class="section-card">
+                <h3>✈️ 回程航班与机场</h3>
+                <div class="flight-card">
+                    <div class="flight-header">
+                        <span class="flight-number">国泰航空 CX252</span>
+                        <span class="flight-time">⏱️ 12:20 - 07:10 (+1天)</span>
+                    </div>
+                    <div class="flight-route">
+                        <div class="flight-node">
+                            <div class="airport-code">LHR</div>
+                            <div class="airport-detail">伦敦希思罗机场 T3</div>
+                        </div>
+                        <div class="flight-arrow">➔</div>
+                        <div class="flight-node">
+                            <div class="airport-code">HKG</div>
+                            <div class="airport-detail">香港国际机场 T1</div>
+                        </div>
+                    </div>
+                    <div class="flight-actions">
+                        <a href="https://www.google.com/search?q=CX252+flight+status" target="_blank" class="flight-btn">🔍 查询实时航班状态</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="flight-btn">📍 希思罗机场地图</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 行程与购物 -->
+            <div class="section-card">
+                <h3>📍 行程景点与返程</h3>
+                <div class="itinerary-item" id="item-task13">
+                    <input type="checkbox" id="task13" onchange="updateTask(this)">
+                    <span class="location-name">希思罗机场免税店购物 & 登机</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="map-link">📍 Map</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 留言板（固定底部） -->
         <div class="comments-section">
             <h2>💬 行程留言板</h2>
             <textarea id="commentInput" placeholder="写下你的建议或留言..."></textarea>
@@ -264,12 +356,9 @@
 
         // --- 1. Tab 切换天数功能 ---
         window.switchDay = function(dayId, btn) {
-            // 隐藏所有 Day 页面
             document.querySelectorAll('.day-page').forEach(page => page.classList.remove('active'));
-            // 取消所有 Tab 按钮的激活状态
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             
-            // 显示选中的 Day 页面并高亮选中的按钮
             document.getElementById(dayId).classList.add('active');
             btn.classList.add('active');
         };
