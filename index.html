@@ -23,52 +23,101 @@
         .checked .location-name { text-decoration: line-through; color: #94a3b8; }
         
         .comments-section { background: white; border-radius: 12px; padding: 20px; margin-top: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .nickname-box { margin-bottom: 12px; }
+        input[type="text"] { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 0.95rem; }
         textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; resize: vertical; margin-bottom: 10px; font-family: inherit; }
-        textarea:focus { outline: none; border-color: var(--primary); }
+        textarea:focus, input[type="text"]:focus { outline: none; border-color: var(--primary); }
         button { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
         button:hover { background: #1d4ed8; }
         .comment-item { background: #f1f5f9; padding: 12px 15px; border-radius: 8px; margin-bottom: 10px; font-size: 0.95rem; border-left: 4px solid var(--primary); }
+        .author-name { font-weight: bold; color: #1e293b; }
         .timestamp { color: #64748b; font-size: 0.8rem; margin-left: 10px; }
     </style>
 </head>
 <body>
 
-    <h1>✈️ 英国之旅 (伦敦 & 利兹) 行程表</h1>
+    <h1>✈️ 专属旅游行程表</h1>
 
+    <!-- Day 1 -->
     <div class="day-section">
-        <h2>Day 1 - 7月22日：抵达与伦敦初探</h2>
+        <h2>Day 1 - 7月17日：抵达与入住</h2>
         <div class="itinerary-item" id="item-task1">
             <input type="checkbox" id="task1" onchange="updateTask(this)">
-            <span class="location-name">落地 & 酒店办理入住</span>
-            <a href="https://maps.google.com/?q=London+Heathrow+Airport" target="_blank" class="map-link">📍 Map</a>
+            <span class="location-name">希思罗机场 & 办理入住</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="map-link">📍 Map</a>
         </div>
         <div class="itinerary-item" id="item-task2">
             <input type="checkbox" id="task2" onchange="updateTask(this)">
             <span class="location-name">大英博物馆 (The British Museum)</span>
-            <a href="https://maps.google.com/?q=The+British+Museum" target="_blank" class="map-link">📍 Map</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=The+British+Museum" target="_blank" class="map-link">📍 Map</a>
         </div>
     </div>
 
+    <!-- Day 2 -->
     <div class="day-section">
-        <h2>Day 2 - 7月23日：利兹探索</h2>
+        <h2>Day 2 - 7月18日：伦敦经典景点</h2>
         <div class="itinerary-item" id="item-task3">
             <input type="checkbox" id="task3" onchange="updateTask(this)">
-            <span class="location-name">利兹火车站 (Leeds Railway Station)</span>
-            <a href="https://maps.google.com/?q=Leeds+Railway+Station" target="_blank" class="map-link">📍 Map</a>
+            <span class="location-name">伦敦眼 (The London Eye)</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=The+London+Eye" target="_blank" class="map-link">📍 Map</a>
         </div>
         <div class="itinerary-item" id="item-task4">
             <input type="checkbox" id="task4" onchange="updateTask(this)">
-            <span class="location-name">皇家军械博物馆 (Royal Armouries Museum)</span>
-            <a href="https://maps.google.com/?q=Royal+Armouries+Museum+Leeds" target="_blank" class="map-link">📍 Map</a>
+            <span class="location-name">大本钟 & 威斯敏斯特教堂</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Big+Ben" target="_blank" class="map-link">📍 Map</a>
         </div>
     </div>
 
+    <!-- Day 3 -->
+    <div class="day-section">
+        <h2>Day 3 - 7月19日：前往利兹</h2>
+        <div class="itinerary-item" id="item-task5">
+            <input type="checkbox" id="task5" onchange="updateTask(this)">
+            <span class="location-name">国王十字车站 (乘坐火车)</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=King%27s+Cross+Station" target="_blank" class="map-link">📍 Map</a>
+        </div>
+        <div class="itinerary-item" id="item-task6">
+            <input type="checkbox" id="task6" onchange="updateTask(this)">
+            <span class="location-name">利兹皇家军械博物馆</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Royal+Armouries+Museum+Leeds" target="_blank" class="map-link">📍 Map</a>
+        </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day-section">
+        <h2>Day 4 - 7月20日：探索利兹与周边</h2>
+        <div class="itinerary-item" id="item-task7">
+            <input type="checkbox" id="task7" onchange="updateTask(this)">
+            <span class="location-name">柯克斯托尔修道院 (Kirkstall Abbey)</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Kirkstall+Abbey" target="_blank" class="map-link">📍 Map</a>
+        </div>
+        <div class="itinerary-item" id="item-task8">
+            <input type="checkbox" id="task8" onchange="updateTask(this)">
+            <span class="location-name">利兹谷物交易所 (Corn Exchange)</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Leeds+Corn+Exchange" target="_blank" class="map-link">📍 Map</a>
+        </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day-section">
+        <h2>Day 5 - 7月21日：返回与购物</h2>
+        <div class="itinerary-item" id="item-task9">
+            <input type="checkbox" id="task9" onchange="updateTask(this)">
+            <span class="location-name">伦敦摄政街购物</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=Regent+Street+London" target="_blank" class="map-link">📍 Map</a>
+        </div>
+    </div>
+
+    <!-- 留言板与昵称绑定 -->
     <div class="comments-section">
         <h2>💬 行程留言板</h2>
-        <textarea id="commentInput" placeholder="写下你的建议或评论..."></textarea>
+        <div class="nickname-box">
+            <input type="text" id="nicknameInput" placeholder="请输入你的昵称/名字 (首次输入后会自动记住此设备)...">
+        </div>
+        <textarea id="commentInput" placeholder="写下你的建议或留言..."></textarea>
         <button onclick="addComment()">提交评论</button>
         <div id="commentList" style="margin-top: 20px;">
-            <!-- Firebase 评论会实时渲染在这里 -->
+            <!-- 评论列表 -->
         </div>
     </div>
 
@@ -78,9 +127,7 @@
         import { getFirestore, collection, addDoc, onSnapshot, doc, setDoc, query, orderBy, serverTimestamp } 
         from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // ==========================================
-        // ⚠️ 请将这里的 config 替换为你自己的 Firebase 配置
-        // ==========================================
+        // Firebase 配置
         const firebaseConfig = {
             apiKey: "AIzaSyCmA8KgyXh8dyJaZDXR-XhHGkrg6liOKFU",
             authDomain: "bye-hk.firebaseapp.com",
@@ -88,22 +135,28 @@
             storageBucket: "bye-hk.firebasestorage.app",
             messagingSenderId: "398683115216",
             appId: "1:398683115216:web:3bb84be7179f7c3b6b18d5",
-            measurementId: "G-37F96G0VBB"  
+            measurementId: "G-37F96G0VBB"
         };
 
-        // 初始化 Firebase 和数据库
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- 1. 打卡状态实时同步 ---
-        
-        // 监听云端打卡状态的变化
+        // 页面加载时：尝试读取本地存储的设备昵称
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedNickname = localStorage.getItem('userNickname');
+            if (savedNickname) {
+                document.getElementById('nicknameInput').value = savedNickname;
+            }
+        });
+
+        // 1. 打卡状态实时同步
         onSnapshot(doc(db, "itinerary", "status"), (docSnap) => {
             if (docSnap.exists()) {
                 const data = docSnap.data();
-                // 遍历所有 checkbox 的 ID
-                ['task1', 'task2', 'task3', 'task4'].forEach(taskId => {
-                    const checkbox = document.getElementById(taskId);
+                // 动态获取当前页面所有的 checkbox
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    const taskId = checkbox.id;
                     const itemDiv = document.getElementById('item-' + taskId);
                     if (checkbox && itemDiv) {
                         checkbox.checked = data[taskId] || false;
@@ -117,63 +170,76 @@
             }
         });
 
-        // 当用户点击 checkbox 时，更新到云端 (绑定到全局 window 对象供 HTML 调用)
         window.updateTask = async function(checkbox) {
             await setDoc(doc(db, "itinerary", "status"), {
                 [checkbox.id]: checkbox.checked
-            }, { merge: true }); // merge: true 确保只更新当前点击的项，不覆盖其他项
+            }, { merge: true });
         };
 
-
-        // --- 2. 留言板实时同步 ---
-        
+        // 2. 留言板实时同步
         const commentsRef = collection(db, "comments");
-        // 按时间倒序查询留言
         const q = query(commentsRef, orderBy("createdAt", "desc"));
 
-        // 监听留言集合的变化
         onSnapshot(q, (snapshot) => {
             const list = document.getElementById('commentList');
-            list.innerHTML = ''; // 清空当前列表
+            list.innerHTML = '';
             
             snapshot.forEach((docSnap) => {
                 const data = docSnap.data();
                 const commentEl = document.createElement('div');
                 commentEl.className = 'comment-item';
                 
-                // 处理时间显示
                 let timeString = '刚刚';
                 if (data.createdAt) {
                     const date = data.createdAt.toDate();
-                    timeString = date.getMonth() + 1 + '/' + date.getDate() + ' ' + 
+                    timeString = (date.getMonth() + 1) + '/' + date.getDate() + ' ' + 
                                  String(date.getHours()).padStart(2, '0') + ':' + 
                                  String(date.getMinutes()).padStart(2, '0');
                 }
 
-                commentEl.innerHTML = `<strong>访客:</strong> ${data.text} <span class="timestamp">(${timeString})</span>`;
+                const nickname = data.nickname || '匿名访客';
+
+                commentEl.innerHTML = `<span class="author-name">${nickname}</span>: ${data.text} <span class="timestamp">(${timeString})</span>`;
                 list.appendChild(commentEl);
             });
         });
 
-        // 提交留言到云端
+        // 提交留言
         window.addComment = async function() {
-            const input = document.getElementById('commentInput');
-            const text = input.value.trim();
-            if (!text) return;
+            const nicknameInput = document.getElementById('nicknameInput');
+            const commentInput = document.getElementById('commentInput');
+            
+            const nickname = nicknameInput.value.trim();
+            const text = commentInput.value.trim();
 
-            // 禁用按钮防连击
+            if (!nickname) {
+                alert("请输入你的昵称或名字！");
+                nicknameInput.focus();
+                return;
+            }
+
+            if (!text) {
+                alert("留言内容不能为空！");
+                commentInput.focus();
+                return;
+            }
+
+            // 记住设备昵称
+            localStorage.setItem('userNickname', nickname);
+
             const btn = document.querySelector('button');
             btn.innerText = '提交中...';
             btn.disabled = true;
 
             try {
                 await addDoc(commentsRef, {
+                    nickname: nickname,
                     text: text,
-                    createdAt: serverTimestamp() // 使用 Firebase 服务器时间
+                    createdAt: serverTimestamp()
                 });
-                input.value = ''; // 清空输入框
+                commentInput.value = ''; // 清空评论框，保留昵称
             } catch (e) {
-                alert("提交失败，请检查网络或数据库权限");
+                alert("提交失败，请重试");
                 console.error(e);
             } finally {
                 btn.innerText = '提交评论';
