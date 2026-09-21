@@ -157,7 +157,9 @@
         <!-- ================= Day 1 页面 ================= -->
         <div id="day1" class="day-page active">
             <!-- 航班信息 -->
-            <div class="flight-card">
+            <div class="section-card">
+                <h3>✈️ 去程航班与机场</h3>
+                <div class="flight-card">
                     <div class="flight-header">
                         <span class="flight-number">国泰航空 CX251</span>
                         <span class="flight-time">⏱️ 00:15 - 06:20</span>
@@ -174,11 +176,11 @@
                         </div>
                     </div>
                     <div class="flight-actions">
-                        <!-- 加上具体出发日期，精确查询当天航班状态 -->
-                        <a href="https://www.google.com/search?q=CX251+2026-07-22+flight+status" target="_blank" class="flight-btn">🔍 查询 7/22 实时航班状态</a>
+                        <a href="https://www.google.com/search?q=CX251+2026-11-25+flight+status" target="_blank" class="flight-btn">🔍 查询 11/25 实时航班状态</a>
                         <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="flight-btn">📍 希思罗机场地图</a>
                     </div>
                 </div>
+            </div>
 
             <!-- 住宿 -->
             <div class="section-card">
@@ -301,7 +303,9 @@
         <!-- ================= Day 5 页面 ================= -->
         <div id="day5" class="day-page">
             <!-- 航班信息 -->
-            <div class="flight-card">
+            <div class="section-card">
+                <h3>✈️ 回程航班与机场</h3>
+                <div class="flight-card">
                     <div class="flight-header">
                         <span class="flight-number">国泰航空 CX252</span>
                         <span class="flight-time">⏱️ 12:20 - 07:10 (+1天)</span>
@@ -318,10 +322,22 @@
                         </div>
                     </div>
                     <div class="flight-actions">
-                        <!-- 加上具体出发日期，精确查询当天航班状态 -->
-                        <a href="https://www.google.com/search?q=CX252+2026-07-31+flight+status" target="_blank" class="flight-btn">🔍 查询 7/31 实时航班状态</a>
+                        <a href="https://www.google.com/search?q=CX252+2026-11-29+flight+status" target="_blank" class="flight-btn">🔍 查询 11/29 实时航班状态</a>
                         <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="flight-btn">📍 希思罗机场地图</a>
                     </div>
+                </div>
+            </div>
+
+            <!-- 退房 -->
+            <div class="section-card">
+                <h3>🏨 住宿退房</h3>
+                <div class="itinerary-item" id="item-task-co1">
+                    <input type="checkbox" id="task-co1" onchange="updateTask(this)">
+                    <span class="location-name">
+                        利兹市中心酒店 Check-out 
+                        <span class="time-tag" style="color: #c2410c; background: #ffedd5;">🚪 Check-out: 11:00 前</span>
+                    </span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Leeds+City+Centre+Hotel" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
 
@@ -335,16 +351,6 @@
                 </div>
             </div>
         </div>
-
-            <!-- 退房旧酒店 -->
-                <div class="itinerary-item" id="item-task-co1">
-                    <input type="checkbox" id="task-co1" onchange="updateTask(this)">
-                    <span class="location-name">
-                        伦敦中心酒店 Check-out 
-                        <span class="time-tag" style="color: #c2410c; background: #ffedd5;">🚪 Check-out: 11:00 前</span>
-                    </span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=London+Hotel" target="_blank" class="map-link">📍 Map</a>
-                </div>
 
         <!-- 留言板（固定底部） -->
         <div class="comments-section">
