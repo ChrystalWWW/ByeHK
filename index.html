@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>专属旅游行程表</title>
+    <title>东京 & 横滨旅游行程表</title>
     <style>
         :root { --primary: #2563eb; --bg: #f8fafc; }
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: #333; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
@@ -90,6 +90,13 @@
         }
         .flight-btn:hover { background: #0284c7; color: white; }
 
+        /* 行李额提示框 */
+        .baggage-box {
+            background: #ffffff; border-left: 4px solid #0284c7; padding: 10px 14px;
+            border-radius: 6px; margin-top: 12px; font-size: 0.88rem; color: #334155;
+        }
+        .baggage-title { font-weight: bold; color: #0369a1; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+
         /* 打卡列表项 */
         .itinerary-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; transition: 0.3s; }
         .itinerary-item:last-child { border-bottom: none; }
@@ -139,7 +146,7 @@
     <!-- 主行程单与留言板页面 -->
     <div id="main-app">
         <div class="header-bar">
-            <h1 style="margin: 0; font-size: 1.4rem;">✈️ 专属旅游行程表</h1>
+            <h1 style="margin: 0; font-size: 1.4rem;">🗼 东京 & 横滨旅游行程表</h1>
             <div class="user-badge" onclick="resetNickname()" title="点击修改昵称">
                 👤 <span id="displayNickname">游客</span> (修改)
             </div>
@@ -147,22 +154,22 @@
 
         <!-- 顶部 Tab 标签切换 -->
         <div class="tabs-nav">
-            <button class="tab-btn active" onclick="switchDay('day1', this)">Day 1 (11/25)</button>
-            <button class="tab-btn" onclick="switchDay('day2', this)">Day 2 (11/26)</button>
-            <button class="tab-btn" onclick="switchDay('day3', this)">Day 3 (11/27)</button>
-            <button class="tab-btn" onclick="switchDay('day4', this)">Day 4 (11/28)</button>
-            <button class="tab-btn" onclick="switchDay('day5', this)">Day 5 (11/29)</button>
+            <button class="tab-btn active" onclick="switchDay('day1', this)">Day 1 (11/25 东京)</button>
+            <button class="tab-btn" onclick="switchDay('day2', this)">Day 2 (11/26 横滨)</button>
+            <button class="tab-btn" onclick="switchDay('day3', this)">Day 3 (11/27 横滨/东京)</button>
+            <button class="tab-btn" onclick="switchDay('day4', this)">Day 4 (11/28 东京)</button>
+            <button class="tab-btn" onclick="switchDay('day5', this)">Day 5 (11/29 返港)</button>
         </div>
 
-        <!-- ================= Day 1 页面 ================= -->
+        <!-- ================= Day 1 页面 (东京) ================= -->
         <div id="day1" class="day-page active">
             <!-- 航班信息 -->
             <div class="section-card">
                 <h3>✈️ 去程航班与机场</h3>
                 <div class="flight-card">
                     <div class="flight-header">
-                        <span class="flight-number">国泰航空 CX251</span>
-                        <span class="flight-time">⏱️ 00:15 - 06:20</span>
+                        <span class="flight-number">大湾区航空 HB320</span>
+                        <span class="flight-time">⏱️ 09:20 - 14:30</span>
                     </div>
                     <div class="flight-route">
                         <div class="flight-node">
@@ -171,13 +178,23 @@
                         </div>
                         <div class="flight-arrow">➔</div>
                         <div class="flight-node">
-                            <div class="airport-code">LHR</div>
-                            <div class="airport-detail">伦敦希思罗机场 T3</div>
+                            <div class="airport-code">NRT</div>
+                            <div class="airport-detail">东京成田国际机场 T2</div>
                         </div>
                     </div>
+                    
+                    <!-- 新增行李额打卡与说明 -->
+                    <div class="baggage-box">
+                        <div class="baggage-title">🧳 行李额度与托运准备</div>
+                        <div class="itinerary-item" id="item-task-bag1" style="padding: 4px 0;">
+                            <input type="checkbox" id="task-bag1" onchange="updateTask(this)">
+                            <span class="location-name" style="font-size: 0.9rem;">托运行李：手提 7kg + 托运 20kg (检查行李重)</span>
+                        </div>
+                    </div>
+
                     <div class="flight-actions">
-                        <a href="https://www.google.com/search?q=CX251+2026-11-25+flight+status" target="_blank" class="flight-btn">🔍 查询 11/25 实时航班状态</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="flight-btn">📍 希思罗机场地图</a>
+                        <a href="https://www.google.com/search?q=HB320+2026-11-25+flight+status" target="_blank" class="flight-btn">🔍 查询 11/25 实时航班状态</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Narita+International+Airport" target="_blank" class="flight-btn">📍 成田机场地图</a>
                     </div>
                 </div>
             </div>
@@ -188,10 +205,10 @@
                 <div class="itinerary-item" id="item-task1">
                     <input type="checkbox" id="task1" onchange="updateTask(this)">
                     <span class="location-name">
-                        伦敦中心酒店 
+                        东京市区酒店 (浅草/上野区域) 
                         <span class="time-tag">🔑 Check-in: 15:00 后</span>
                     </span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=London+Hotel" target="_blank" class="map-link">📍 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Asakusa+Hotel+Tokyo" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
             
@@ -200,8 +217,13 @@
                 <h3>📍 行程景点</h3>
                 <div class="itinerary-item" id="item-task2">
                     <input type="checkbox" id="task2" onchange="updateTask(this)">
-                    <span class="location-name">大英博物馆</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=The+British+Museum" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">浅草寺 & 仲见世商店街</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Sensō-ji" target="_blank" class="map-link">📍 Map</a>
+                </div>
+                <div class="itinerary-item" id="item-task2-1">
+                    <input type="checkbox" id="task2-1" onchange="updateTask(this)">
+                    <span class="location-name">东京晴空塔 (Tokyo Skytree) 展望台夜景</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Skytree" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
 
@@ -210,110 +232,154 @@
                 <h3>🍽️ 餐厅与美食</h3>
                 <div class="itinerary-item" id="item-task3">
                     <input type="checkbox" id="task3" onchange="updateTask(this)">
-                    <span class="location-name">晚餐：Flat Iron 牛排馆</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Flat+Iron+London" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">晚餐：浅草今半 (顶级黑毛和牛寿喜烧)</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Asakusa+Imahan" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
         </div>
 
-        <!-- ================= Day 2 页面 ================= -->
+        <!-- ================= Day 2 页面 (横滨) ================= -->
         <div id="day2" class="day-page">
+            <!-- 住宿 -->
             <div class="section-card">
                 <h3>🏨 住宿</h3>
                 <div class="itinerary-item" id="item-task4">
                     <input type="checkbox" id="task4" onchange="updateTask(this)">
-                    <span class="location-name">伦敦中心酒店 (连住)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=London+Hotel" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">
+                        横滨港未来洲际酒店 / 市区酒店 
+                        <span class="time-tag">🔑 Check-in: 15:00 后</span>
+                    </span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=InterContinental+Yokohama+Grand" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
+
+            <!-- 行程 -->
             <div class="section-card">
                 <h3>📍 行程景点</h3>
                 <div class="itinerary-item" id="item-task5">
                     <input type="checkbox" id="task5" onchange="updateTask(this)">
-                    <span class="location-name">伦敦眼摩天轮</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=The+London+Eye" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">横滨红砖仓库 (Red Brick Warehouse)</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Red+Brick+Warehouse" target="_blank" class="map-link">📍 Map</a>
+                </div>
+                <div class="itinerary-item" id="item-task5-1">
+                    <input type="checkbox" id="task5-1" onchange="updateTask(this)">
+                    <span class="location-name">横滨高达工厂 (GFY) / 港未来 21 区散步</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Gundam+Factory+Yokohama" target="_blank" class="map-link">📍 Map</a>
+                </div>
+                <div class="itinerary-item" id="item-task5-2">
+                    <input type="checkbox" id="task5-2" onchange="updateTask(this)">
+                    <span class="location-name">Yokohama Air Cabin 缆车夜景</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=YOKOHAMA+AIR+CABIN" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
+
+            <!-- 餐厅 -->
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
                 <div class="itinerary-item" id="item-task6">
                     <input type="checkbox" id="task6" onchange="updateTask(this)">
-                    <span class="location-name">午餐：Borough Market 炸鱼薯条</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Borough+Market" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">午餐：横滨家系拉面总本山 吉村家</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Yoshimuraya+Yokohama" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
         </div>
 
-        <!-- ================= Day 3 页面 ================= -->
+        <!-- ================= Day 3 页面 (横滨 ➔ 东京) ================= -->
         <div id="day3" class="day-page">
+            <!-- 住宿 -->
             <div class="section-card">
                 <h3>🏨 住宿</h3>
-                <div class="itinerary-item" id="item-task7">
-                    <input type="checkbox" id="task7" onchange="updateTask(this)">
-                    <span class="location-name">利兹市中心酒店</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Leeds+City+Centre+Hotel" target="_blank" class="map-link">📍 Map</a>
+                <div class="itinerary-item" id="item-task7-co">
+                    <input type="checkbox" id="task7-co" onchange="updateTask(this)">
+                    <span class="location-name">
+                        横滨酒店 Check-out 
+                        <span class="time-tag" style="color: #c2410c; background: #ffedd5;">🚪 Check-out: 11:00 前</span>
+                    </span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Hotel" target="_blank" class="map-link">📍 Map</a>
+                </div>
+                <div class="itinerary-item" id="item-task7-ci">
+                    <input type="checkbox" id="task7-ci" onchange="updateTask(this)">
+                    <span class="location-name">
+                        返回东京酒店 Check-in (新宿/涩谷区域)
+                        <span class="time-tag">🔑 Check-in: 15:00 后</span>
+                    </span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Shinjuku+Hotel+Tokyo" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
+
+            <!-- 行程 -->
             <div class="section-card">
                 <h3>📍 行程景点</h3>
                 <div class="itinerary-item" id="item-task8">
                     <input type="checkbox" id="task8" onchange="updateTask(this)">
-                    <span class="location-name">皇家军械博物馆</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Royal+Armouries+Museum+Leeds" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">横滨中华街 & 山下公园散步</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Chinatown" target="_blank" class="map-link">📍 Map</a>
+                </div>
+                <div class="itinerary-item" id="item-task8-1">
+                    <input type="checkbox" id="task8-1" onchange="updateTask(this)">
+                    <span class="location-name">返回东京：涩谷 Sky (SHIBUYA SKY) 露天展望台</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
+
+            <!-- 餐厅 -->
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
                 <div class="itinerary-item" id="item-task9">
                     <input type="checkbox" id="task9" onchange="updateTask(this)">
-                    <span class="location-name">晚餐：利兹本地特色 Pub</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Leeds+Pub" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">晚餐：涩谷 挽肉と米 (汉堡排) / 炸牛排 胜牛</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Hikiniku+to+Kome+Shibuya" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
         </div>
 
-        <!-- ================= Day 4 页面 ================= -->
+        <!-- ================= Day 4 页面 (东京市区) ================= -->
         <div id="day4" class="day-page">
             <div class="section-card">
                 <h3>🏨 住宿</h3>
                 <div class="itinerary-item" id="item-task10">
                     <input type="checkbox" id="task10" onchange="updateTask(this)">
-                    <span class="location-name">利兹市中心酒店 (连住)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Leeds+City+Centre+Hotel" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">东京市区酒店 (连住)</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Shinjuku+Hotel+Tokyo" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
             <div class="section-card">
                 <h3>📍 行程景点</h3>
                 <div class="itinerary-item" id="item-task11">
                     <input type="checkbox" id="task11" onchange="updateTask(this)">
-                    <span class="location-name">柯克斯托尔修道院 (Kirkstall Abbey)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Kirkstall+Abbey" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">明治神宮 & 原宿竹下通</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Meiji+Jingu" target="_blank" class="map-link">📍 Map</a>
+                </div>
+                <div class="itinerary-item" id="item-task11-1">
+                    <input type="checkbox" id="task11-1" onchange="updateTask(this)">
+                    <span class="location-name">银座商圈购物 & 伊东屋 (Itoya)</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Ginza+Tokyo" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
                 <div class="itinerary-item" id="item-task12">
                     <input type="checkbox" id="task12" onchange="updateTask(this)">
-                    <span class="location-name">午餐：Leeds Corn Exchange 咖啡馆</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Leeds+Corn+Exchange" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">晚餐：银座 篝 (Kagari) 鸡白汤拉面</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Ginza+Kagari" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
         </div>
 
-        <!-- ================= Day 5 页面 ================= -->
+        <!-- ================= Day 5 页面 (东京 ➔ 香港) ================= -->
         <div id="day5" class="day-page">
             <!-- 航班信息 -->
             <div class="section-card">
                 <h3>✈️ 回程航班与机场</h3>
                 <div class="flight-card">
                     <div class="flight-header">
-                        <span class="flight-number">国泰航空 CX252</span>
-                        <span class="flight-time">⏱️ 12:20 - 07:10 (+1天)</span>
+                        <span class="flight-number">大湾区航空 HB321</span>
+                        <span class="flight-time">⏱️ 15:30 - 20:00</span>
                     </div>
                     <div class="flight-route">
                         <div class="flight-node">
-                            <div class="airport-code">LHR</div>
-                            <div class="airport-detail">伦敦希思罗机场 T3</div>
+                            <div class="airport-code">NRT</div>
+                            <div class="airport-detail">东京成田国际机场 T2</div>
                         </div>
                         <div class="flight-arrow">➔</div>
                         <div class="flight-node">
@@ -321,9 +387,19 @@
                             <div class="airport-detail">香港国际机场 T1</div>
                         </div>
                     </div>
+
+                    <!-- 新增行李额打卡与说明 -->
+                    <div class="baggage-box">
+                        <div class="baggage-title">🧳 返程行李额度与托运准备</div>
+                        <div class="itinerary-item" id="item-task-bag2" style="padding: 4px 0;">
+                            <input type="checkbox" id="task-bag2" onchange="updateTask(this)">
+                            <span class="location-name" style="font-size: 0.9rem;">托运行李：买齐伴手礼，确认行李未超重 (托运 20kg/人)</span>
+                        </div>
+                    </div>
+
                     <div class="flight-actions">
-                        <a href="https://www.google.com/search?q=CX252+2026-11-29+flight+status" target="_blank" class="flight-btn">🔍 查询 11/29 实时航班状态</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="flight-btn">📍 希思罗机场地图</a>
+                        <a href="https://www.google.com/search?q=HB321+2026-11-29+flight+status" target="_blank" class="flight-btn">🔍 查询 11/29 实时航班状态</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Narita+International+Airport" target="_blank" class="flight-btn">📍 成田机场地图</a>
                     </div>
                 </div>
             </div>
@@ -331,13 +407,13 @@
             <!-- 退房 -->
             <div class="section-card">
                 <h3>🏨 住宿退房</h3>
-                <div class="itinerary-item" id="item-task-co1">
-                    <input type="checkbox" id="task-co1" onchange="updateTask(this)">
+                <div class="itinerary-item" id="item-task-co5">
+                    <input type="checkbox" id="task-co5" onchange="updateTask(this)">
                     <span class="location-name">
-                        利兹市中心酒店 Check-out 
+                        东京市区酒店 Check-out 
                         <span class="time-tag" style="color: #c2410c; background: #ffedd5;">🚪 Check-out: 11:00 前</span>
                     </span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Leeds+City+Centre+Hotel" target="_blank" class="map-link">📍 Map</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Shinjuku+Hotel+Tokyo" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
 
@@ -346,8 +422,8 @@
                 <h3>📍 行程景点与返程</h3>
                 <div class="itinerary-item" id="item-task13">
                     <input type="checkbox" id="task13" onchange="updateTask(this)">
-                    <span class="location-name">希思罗机场免税店购物 & 登机</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=London+Heathrow+Airport" target="_blank" class="map-link">📍 Map</a>
+                    <span class="location-name">成田机场免税店伴手礼采购 (白色恋人/Tokyo Banana) & 登机</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Narita+International+Airport" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
         </div>
