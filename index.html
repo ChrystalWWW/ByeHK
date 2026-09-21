@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行程记录与留言板</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: #333; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        h1 { text-align: center; color: #1e293b; margin-bottom: 30px; }
+        
+        .day-section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .day-section h2 { margin-top: 0; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; font-size: 1.25rem; }
+        .itinerary-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px dashed #e2e8f0; transition: 0.3s; }
+        .itinerary-item:last-child { border-bottom: none; }
+        
+        input[type="checkbox"] { width: 22px; height: 22px; margin-right: 15px; cursor: pointer; accent-color: var(--primary); }
+        .location-name { flex-grow: 1; font-weight: 500; font-size: 1.05rem; }
+        
+        .map-link { background: #e0f2fe; color: #0369a1; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
+        .map-link:hover { background: #bae6fd; transform: scale(1.02); }
+        
+        .checked .location-name { text-decoration: line-through; color: #94a3b8; }
+        
+        .comments-section { background: white; border-radius: 12px; padding: 20px; margin-top: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        textarea { width: 100%; height: 80px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; resize: vertical; margin-bottom: 10px; font-family: inherit; }
+        textarea:focus { outline: none; border-color: var(--primary); }
+        button { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+        button:hover { background: #1d4ed8; }
+        .comment-item { background: #f1f5f9; padding: 12px 15px; border-radius: 8px; margin-bottom: 10px; font-size: 0.95rem; border-left: 4px solid var(--primary); }
+        .timestamp { color: #64748b; font-size: 0.8rem; margin-left: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>✈️ 英国之旅 (伦敦 & 利兹) 行程表</h1>
+
+    <div class="day-section">
+        <h2>Day 1 - 7月22日：抵达与伦敦初探</h2>
+        <div class="itinerary-item" id="item-task1">
+            <input type="checkbox" id="task1" onchange="updateTask(this)">
+            <span class="location-name">落地 & 酒店办理入住</span>
+            <a href="https://maps.google.com/?q=London+Heathrow+Airport" target="_blank" class="map-link">📍 Map</a>
+        </div>
+        <div class="itinerary-item" id="item-task2">
+            <input type="checkbox" id="task2" onchange="updateTask(this)">
+            <span class="location-name">大英博物馆 (The British Museum)</span>
+            <a href="https://maps.google.com/?q=The+British+Museum" target="_blank" class="map-link">📍 Map</a>
+        </div>
+    </div>
+
+    <div class="day-section">
+        <h2>Day 2 - 7月23日：利兹探索</h2>
+        <div class="itinerary-item" id="item-task3">
+            <input type="checkbox" id="task3" onchange="updateTask(this)">
+            <span class="location-name">利兹火车站 (Leeds Railway Station)</span>
+            <a href="https://maps.google.com/?q=Leeds+Railway+Station" target="_blank" class="map-link">📍 Map</a>
+        </div>
+        <div class="itinerary-item" id="item-task4">
+            <input type="checkbox" id="task4" onchange="updateTask(this)">
+            <span class="location-name">皇家军械博物馆 (Royal Armouries Museum)</span>
+            <a href="https://maps.google.com/?q=Royal+Armouries+Museum+Leeds" target="_blank" class="map-link">📍 Map</a>
+        </div>
+    </div>
+
+    <div class="comments-section">
+        <h2>💬 行程留言板</h2>
+        <textarea id="commentInput" placeholder="写下你的建议或评论..."></textarea>
+        <button onclick="addComment()">提交评论</button>
+        <div id="commentList" style="margin-top: 20px;">
+            <!-- Firebase 评论会实时渲染在这里 -->
+        </div>
+    </div>
+
+    <!-- 引入 Firebase 模块化 SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, setDoc, query, orderBy, serverTimestamp } 
+        from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // ==========================================
+        // ⚠️ 请将这里的 config 替换为你自己的 Firebase 配置
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCmA8KgyXh8dyJaZDXR-XhHGkrg6liOKFU",
+            authDomain: "bye-hk.firebaseapp.com",
+            projectId: "bye-hk",
+            storageBucket: "bye-hk.firebasestorage.app",
+            messagingSenderId: "398683115216",
+            appId: "1:398683115216:web:3bb84be7179f7c3b6b18d5",
+            measurementId: "G-37F96G0VBB"  
+        };
+
+        // 初始化 Firebase 和数据库
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- 1. 打卡状态实时同步 ---
+        
+        // 监听云端打卡状态的变化
+        onSnapshot(doc(db, "itinerary", "status"), (docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                // 遍历所有 checkbox 的 ID
+                ['task1', 'task2', 'task3', 'task4'].forEach(taskId => {
+                    const checkbox = document.getElementById(taskId);
+                    const itemDiv = document.getElementById('item-' + taskId);
+                    if (checkbox && itemDiv) {
+                        checkbox.checked = data[taskId] || false;
+                        if (checkbox.checked) {
+                            itemDiv.classList.add('checked');
+                        } else {
+                            itemDiv.classList.remove('checked');
+                        }
+                    }
+                });
+            }
+        });
+
+        // 当用户点击 checkbox 时，更新到云端 (绑定到全局 window 对象供 HTML 调用)
+        window.updateTask = async function(checkbox) {
+            await setDoc(doc(db, "itinerary", "status"), {
+                [checkbox.id]: checkbox.checked
+            }, { merge: true }); // merge: true 确保只更新当前点击的项，不覆盖其他项
+        };
+
+
+        // --- 2. 留言板实时同步 ---
+        
+        const commentsRef = collection(db, "comments");
+        // 按时间倒序查询留言
+        const q = query(commentsRef, orderBy("createdAt", "desc"));
+
+        // 监听留言集合的变化
+        onSnapshot(q, (snapshot) => {
+            const list = document.getElementById('commentList');
+            list.innerHTML = ''; // 清空当前列表
+            
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment-item';
+                
+                // 处理时间显示
+                let timeString = '刚刚';
+                if (data.createdAt) {
+                    const date = data.createdAt.toDate();
+                    timeString = date.getMonth() + 1 + '/' + date.getDate() + ' ' + 
+                                 String(date.getHours()).padStart(2, '0') + ':' + 
+                                 String(date.getMinutes()).padStart(2, '0');
+                }
+
+                commentEl.innerHTML = `<strong>访客:</strong> ${data.text} <span class="timestamp">(${timeString})</span>`;
+                list.appendChild(commentEl);
+            });
+        });
+
+        // 提交留言到云端
+        window.addComment = async function() {
+            const input = document.getElementById('commentInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // 禁用按钮防连击
+            const btn = document.querySelector('button');
+            btn.innerText = '提交中...';
+            btn.disabled = true;
+
+            try {
+                await addDoc(commentsRef, {
+                    text: text,
+                    createdAt: serverTimestamp() // 使用 Firebase 服务器时间
+                });
+                input.value = ''; // 清空输入框
+            } catch (e) {
+                alert("提交失败，请检查网络或数据库权限");
+                console.error(e);
+            } finally {
+                btn.innerText = '提交评论';
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
