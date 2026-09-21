@@ -100,6 +100,17 @@
         .map-link { background: #e0f2fe; color: #0369a1; text-decoration: none; padding: 5px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: bold; transition: 0.2s; display: flex; align-items: center; gap: 4px; }
         .map-link:hover { background: #bae6fd; transform: scale(1.02); }
         
+        /* 酒店入住与退房时间样式 */
+        .time-tag {
+            font-size: 0.82rem;
+            color: #0284c7;
+            background: #e0f2fe;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+        
         .checked .location-name { text-decoration: line-through; color: #94a3b8; }
         
         /* 留言板样式 */
@@ -174,11 +185,14 @@
                 <h3>🏨 住宿</h3>
                 <div class="itinerary-item" id="item-task1">
                     <input type="checkbox" id="task1" onchange="updateTask(this)">
-                    <span class="location-name">伦敦中心酒店 Check-in</span>
+                    <span class="location-name">
+                        伦敦中心酒店 
+                        <span class="time-tag">🔑 Check-in: 15:00 后</span>
+                    </span>
                     <a href="https://www.google.com/maps/search/?api=1&query=London+Hotel" target="_blank" class="map-link">📍 Map</a>
                 </div>
             </div>
-
+            
             <!-- 行程 -->
             <div class="section-card">
                 <h3>📍 行程景点</h3>
@@ -321,6 +335,16 @@
                 </div>
             </div>
         </div>
+
+            <!-- 退房旧酒店 -->
+                <div class="itinerary-item" id="item-task-co1">
+                    <input type="checkbox" id="task-co1" onchange="updateTask(this)">
+                    <span class="location-name">
+                        伦敦中心酒店 Check-out 
+                        <span class="time-tag" style="color: #c2410c; background: #ffedd5;">🚪 Check-out: 11:00 前</span>
+                    </span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=London+Hotel" target="_blank" class="map-link">📍 Map</a>
+                </div>
 
         <!-- 留言板（固定底部） -->
         <div class="comments-section">
