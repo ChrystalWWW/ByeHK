@@ -97,28 +97,33 @@
         }
         .baggage-title { font-weight: bold; color: #0369a1; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
 
-        /* 打卡列表项 */
-        .itinerary-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; transition: 0.3s; }
+        /* 列表项样式 */
+        .itinerary-item { 
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 0; border-bottom: 1px dashed #e2e8f0; flex-wrap: wrap; gap: 8px;
+        }
         .itinerary-item:last-child { border-bottom: none; }
         
-        input[type="checkbox"] { width: 22px; height: 22px; margin-right: 15px; cursor: pointer; accent-color: var(--primary); }
-        .location-name { flex-grow: 1; font-weight: 500; font-size: 1rem; }
+        .location-name { font-weight: 500; font-size: 0.98rem; color: #1e293b; flex: 1; min-width: 200px; }
         
-        .map-link { background: #e0f2fe; color: #0369a1; text-decoration: none; padding: 5px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: bold; transition: 0.2s; display: flex; align-items: center; gap: 4px; }
-        .map-link:hover { background: #bae6fd; transform: scale(1.02); }
-        
-        /* 酒店入住与退房时间样式 */
-        .time-tag {
-            font-size: 0.82rem;
-            color: #0284c7;
-            background: #e0f2fe;
-            padding: 2px 8px;
-            border-radius: 6px;
-            margin-left: 8px;
-            font-weight: 500;
+        /* 链接按钮组 */
+        .links-group { display: flex; gap: 6px; flex-wrap: wrap; }
+        .action-link {
+            text-decoration: none; padding: 4px 10px; border-radius: 16px;
+            font-size: 0.78rem; font-weight: bold; transition: 0.2s; display: inline-flex; align-items: center; gap: 3px;
         }
-        
-        .checked .location-name { text-decoration: line-through; color: #94a3b8; }
+        .link-wiki { background: #f1f5f9; color: #475569; }
+        .link-wiki:hover { background: #e2e8f0; }
+        .link-xhs { background: #fef2f2; color: #dc2626; }
+        .link-xhs:hover { background: #fee2e2; }
+        .link-map { background: #e0f2fe; color: #0369a1; }
+        .link-map:hover { background: #bae6fd; }
+
+        /* 酒店时间样式 */
+        .time-tag {
+            font-size: 0.8rem; color: #0284c7; background: #e0f2fe;
+            padding: 2px 6px; border-radius: 4px; margin-left: 6px; font-weight: 500;
+        }
         
         /* 留言板样式 */
         .comments-section { background: white; border-radius: 12px; padding: 20px; margin-top: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
@@ -137,7 +142,7 @@
     <div id="welcome-screen">
         <div class="welcome-card">
             <h1>✈️ 欢迎开启旅程</h1>
-            <p>请输入你的名字/昵称，开始查看与打卡行程：</p>
+            <p>请输入你的名字/昵称，开始查看与讨论行程：</p>
             <input type="text" id="welcomeNickname" placeholder="例如：小明" autofocus>
             <button onclick="enterTrip()">开启行程单 ➔</button>
         </div>
@@ -183,13 +188,9 @@
                         </div>
                     </div>
                     
-                    <!-- 行李额打卡 -->
                     <div class="baggage-box">
                         <div class="baggage-title">🧳 行李额度与托运准备</div>
-                        <div class="itinerary-item" id="item-task-bag1" style="padding: 4px 0;">
-                            <input type="checkbox" id="task-bag1" onchange="updateTask(this)">
-                            <span class="location-name" style="font-size: 0.9rem;">托运行李：手提 7kg + 托运 20kg (检查行李重量)</span>
-                        </div>
+                        <div style="font-size: 0.88rem; color: #475569;">手提 7kg + 托运 20kg /人</div>
                     </div>
 
                     <div class="flight-actions">
@@ -202,124 +203,156 @@
             <!-- 住宿 -->
             <div class="section-card">
                 <h3>🏨 住宿</h3>
-                <div class="itinerary-item" id="item-task1">
-                    <input type="checkbox" id="task1" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">
                         东京市区酒店 (新宿/上野/浅草) 
                         <span class="time-tag">🔑 Check-in: 15:00 后</span>
                     </span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/东京" target="_blank" class="action-link link-wiki">🌐 Wiki/搜</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=东京酒店推荐" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
             
             <!-- 行程 -->
             <div class="section-card">
                 <h3>📍 行程景点</h3>
-                <div class="itinerary-item" id="item-task2">
-                    <input type="checkbox" id="task2" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">浅草寺 & 仲见世商店街</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Sensō-ji" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/浅草寺" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=浅草寺" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Sensō-ji" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
-                <div class="itinerary-item" id="item-task2-1">
-                    <input type="checkbox" id="task2-1" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">东京晴空塔 (Tokyo Skytree) 展望台夜景</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Skytree" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/東京晴空塔" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=东京晴空塔" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Skytree" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
 
             <!-- 餐厅 -->
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
-                <div class="itinerary-item" id="item-task3">
-                    <input type="checkbox" id="task3" onchange="updateTask(this)">
-                    <span class="location-name">晚餐：浅草今半 (顶级黑毛和牛寿喜烧)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Asakusa+Imahan" target="_blank" class="map-link">📍 Map</a>
+                <div class="itinerary-item">
+                    <span class="location-name">浅草今半 (顶级黑毛和牛寿喜烧)</span>
+                    <div class="links-group">
+                        <a href="https://www.google.com/search?q=浅草今半" target="_blank" class="action-link link-wiki">🌐 搜索</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=浅草今半" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Asakusa+Imahan" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- ================= Day 2 页面 (东京市区) ================= -->
         <div id="day2" class="day-page">
-            <!-- 住宿 -->
             <div class="section-card">
                 <h3>🏨 住宿</h3>
-                <div class="itinerary-item" id="item-task4">
-                    <input type="checkbox" id="task4" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">东京市区酒店 (连住)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- 行程 -->
             <div class="section-card">
                 <h3>📍 行程景点</h3>
-                <div class="itinerary-item" id="item-task5">
-                    <input type="checkbox" id="task5" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">明治神宫 & 原宿竹下通</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Meiji+Jingu" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/明治神宮" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=明治神宫" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Meiji+Jingu" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
-                <div class="itinerary-item" id="item-task5-1">
-                    <input type="checkbox" id="task5-1" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">涩谷十字路口 & SHIBUYA SKY 展望台</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/澀谷Scramble_Square" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=SHIBUYA+SKY" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=SHIBUYA+SKY" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- 餐厅 -->
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
-                <div class="itinerary-item" id="item-task6">
-                    <input type="checkbox" id="task6" onchange="updateTask(this)">
-                    <span class="location-name">晚餐：涩谷 挽肉と米 (汉堡排) / 炸牛排 胜牛</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Hikiniku+to+Kome+Shibuya" target="_blank" class="map-link">📍 Map</a>
+                <div class="itinerary-item">
+                    <span class="location-name">涩谷 挽肉と米 (汉堡排) / 炸牛排 胜牛</span>
+                    <div class="links-group">
+                        <a href="https://www.google.com/search?q=挽肉と米+涩谷" target="_blank" class="action-link link-wiki">🌐 搜索</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=涩谷+挽肉と米" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hikiniku+to+Kome+Shibuya" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- ================= Day 3 页面 (横滨一日游) ================= -->
         <div id="day3" class="day-page">
-            <!-- 住宿 -->
             <div class="section-card">
                 <h3>🏨 住宿</h3>
-                <div class="itinerary-item" id="item-task7">
-                    <input type="checkbox" id="task7" onchange="updateTask(this)">
-                    <span class="location-name">东京市区酒店 (连住，无需退房行李随身)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="map-link">📍 Map</a>
+                <div class="itinerary-item">
+                    <span class="location-name">东京市区酒店 (连住)</span>
+                    <div class="links-group">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- 行程 -->
             <div class="section-card">
                 <h3>📍 行程景点</h3>
-                <div class="itinerary-item" id="item-task8-0">
-                    <input type="checkbox" id="task8-0" onchange="updateTask(this)">
-                    <span class="location-name">乘东急东横线/JR 从东京前往横滨 (约 30-40 分钟)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Station" target="_blank" class="map-link">📍 Map</a>
+                <div class="itinerary-item">
+                    <span class="location-name">乘东急东横线/JR前往横滨</span>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/橫濱市" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=东京前往横滨交通" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Station" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
-                <div class="itinerary-item" id="item-task8-1">
-                    <input type="checkbox" id="task8-1" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">横滨红砖仓库 (Red Brick Warehouse)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Red+Brick+Warehouse" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/橫濱紅磚倉庫" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=横滨红砖仓库" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Red+Brick+Warehouse" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
-                <div class="itinerary-item" id="item-task8-2">
-                    <input type="checkbox" id="task8-2" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">横滨中华街 & 山下公园散步</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Chinatown" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/橫濱中華街" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=横滨中华街" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Yokohama+Chinatown" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
-                <div class="itinerary-item" id="item-task8-3">
-                    <input type="checkbox" id="task8-3" onchange="updateTask(this)">
-                    <span class="location-name">Yokohama Air Cabin 都市缆车赏夜景 (搭车返回东京)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=YOKOHAMA+AIR+CABIN" target="_blank" class="map-link">📍 Map</a>
+                <div class="itinerary-item">
+                    <span class="location-name">Yokohama Air Cabin 都市缆车赏夜景</span>
+                    <div class="links-group">
+                        <a href="https://www.google.com/search?q=YOKOHAMA+AIR+CABIN" target="_blank" class="action-link link-wiki">🌐 搜索</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=Yokohama+Air+Cabin" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=YOKOHAMA+AIR+CABIN" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- 餐厅 -->
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
-                <div class="itinerary-item" id="item-task9">
-                    <input type="checkbox" id="task9" onchange="updateTask(this)">
-                    <span class="location-name">午餐/晚餐：横滨家系拉面吉村家 / 中华街点心</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Yoshimuraya+Yokohama" target="_blank" class="map-link">📍 Map</a>
+                <div class="itinerary-item">
+                    <span class="location-name">横滨家系拉面吉村家 / 中华街点心</span>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/吉村家" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=横滨吉村家" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Yoshimuraya+Yokohama" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -328,31 +361,41 @@
         <div id="day4" class="day-page">
             <div class="section-card">
                 <h3>🏨 住宿</h3>
-                <div class="itinerary-item" id="item-task10">
-                    <input type="checkbox" id="task10" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">东京市区酒店 (连住)</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
             <div class="section-card">
                 <h3>📍 行程景点</h3>
-                <div class="itinerary-item" id="item-task11">
-                    <input type="checkbox" id="task11" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">银座商圈购物 & 伊东屋 (Itoya) 文具大楼</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Ginza+Tokyo" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/銀座" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=银座伊东屋" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Ginza+Tokyo" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
-                <div class="itinerary-item" id="item-task11-1">
-                    <input type="checkbox" id="task11-1" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">秋叶原动漫街 / 上野恩赐公园</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Akihabara+Tokyo" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/秋葉原" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=秋叶原逛街" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Akihabara+Tokyo" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
             <div class="section-card">
                 <h3>🍽️ 餐厅与美食</h3>
-                <div class="itinerary-item" id="item-task12">
-                    <input type="checkbox" id="task12" onchange="updateTask(this)">
-                    <span class="location-name">晚餐：银座 篝 (Kagari) 鸡白汤拉面</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Ginza+Kagari" target="_blank" class="map-link">📍 Map</a>
+                <div class="itinerary-item">
+                    <span class="location-name">银座 篝 (Kagari) 鸡白汤拉面</span>
+                    <div class="links-group">
+                        <a href="https://www.google.com/search?q=银座篝拉面" target="_blank" class="action-link link-wiki">🌐 搜索</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=银座篝" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Ginza+Kagari" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -379,13 +422,9 @@
                         </div>
                     </div>
 
-                    <!-- 行李额打卡 -->
                     <div class="baggage-box">
                         <div class="baggage-title">🧳 返程行李额度与托运准备</div>
-                        <div class="itinerary-item" id="item-task-bag2" style="padding: 4px 0;">
-                            <input type="checkbox" id="task-bag2" onchange="updateTask(this)">
-                            <span class="location-name" style="font-size: 0.9rem;">托运行李：买齐伴手礼，确认行李未超重 (托运 20kg/人)</span>
-                        </div>
+                        <div style="font-size: 0.88rem; color: #475569;">确认行李未超重 (托运 20kg/人)</div>
                     </div>
 
                     <div class="flight-actions">
@@ -398,23 +437,27 @@
             <!-- 退房 -->
             <div class="section-card">
                 <h3>🏨 住宿退房</h3>
-                <div class="itinerary-item" id="item-task-co5">
-                    <input type="checkbox" id="task-co5" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">
                         东京市区酒店 Check-out 
                         <span class="time-tag" style="color: #c2410c; background: #ffedd5;">🚪 Check-out: 11:00 前</span>
                     </span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Tokyo+Hotel" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
 
             <!-- 行程与购物 -->
             <div class="section-card">
                 <h3>📍 行程景点与返程</h3>
-                <div class="itinerary-item" id="item-task13">
-                    <input type="checkbox" id="task13" onchange="updateTask(this)">
+                <div class="itinerary-item">
                     <span class="location-name">成田机场免税店伴手礼采购 (白色恋人/Tokyo Banana) & 登机</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Narita+International+Airport" target="_blank" class="map-link">📍 Map</a>
+                    <div class="links-group">
+                        <a href="https://zh.wikipedia.org/zh-cn/成田国际机场" target="_blank" class="action-link link-wiki">🌐 Wiki</a>
+                        <a href="https://www.xiaohongshu.com/search_result?keyword=成田机场免税店必买" target="_blank" class="action-link link-xhs">📕 小红书</a>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Narita+International+Airport" target="_blank" class="action-link link-map">📍 地图</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -493,33 +536,7 @@
             location.reload();
         };
 
-        // --- 3. 打卡状态实时同步 ---
-        onSnapshot(doc(db, "itinerary", "status"), (docSnap) => {
-            if (docSnap.exists()) {
-                const data = docSnap.data();
-                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                checkboxes.forEach(checkbox => {
-                    const taskId = checkbox.id;
-                    const itemDiv = document.getElementById('item-' + taskId);
-                    if (checkbox && itemDiv) {
-                        checkbox.checked = data[taskId] || false;
-                        if (checkbox.checked) {
-                            itemDiv.classList.add('checked');
-                        } else {
-                            itemDiv.classList.remove('checked');
-                        }
-                    }
-                });
-            }
-        });
-
-        window.updateTask = async function(checkbox) {
-            await setDoc(doc(db, "itinerary", "status"), {
-                [checkbox.id]: checkbox.checked
-            }, { merge: true });
-        };
-
-        // --- 4. 留言板功能 ---
+        // --- 3. 留言板功能 ---
         const commentsRef = collection(db, "comments");
         const q = query(commentsRef, orderBy("createdAt", "desc"));
 
